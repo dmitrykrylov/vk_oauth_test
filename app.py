@@ -43,7 +43,7 @@ def require_vk_token(func):
     @wraps(func)
     def check_token(*args, **kwargs):
         if 'vk_token' not in session:
-            return redirect(url_for('authorize'))
+            return redirect(url_for('login'))
         return func(*args, **kwargs)
 
     return check_token
