@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Exo+2');
+
+
+body {
+	text-align: center;
+	font-family: 'Exo 2', sans-serif;
+	font-size: 24px;
+}
+
+.auth_form {
+	margin-top: 70px;	
+}
+
+.auth_btn {
+	height: 50px;
+	width: 300px;
+	background-color: #aaf;
+	border: solid 2px #000;
+	font-size: 20px;
+	border-radius: 5px;
+}

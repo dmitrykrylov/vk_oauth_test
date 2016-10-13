@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta id="data" data-name="{{data}}">
+	<title>Document</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+	<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+</head>
+<body>
+	
+
+		<h2>Вы зашли из-под аккаунта:</h2>
+		<div id="user-container"></div>
+		<h3>Это пять Ваших друзей:</h3>	
+		<div id="friends-container"></div>
+		
+		<form class="auth_form" action="/logout">
+			<button type="submit" class="auth_btn">Выход</button>
+		</form>
+
+
+
+	<script   src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+</body>
+</html>
