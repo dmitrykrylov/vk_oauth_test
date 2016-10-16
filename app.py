@@ -11,8 +11,7 @@ import os
 CLIENT_ID = os.environ.get('VK_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('VK_CLIENT_SECRET')
 API_VERSION = '5.57'
-REDIRECT_URI = 'http://localhost:5000/get_token'
-# REDIRECT_URI = 'https://vk-oauth-test.herokuapp.com/get_token'
+REDIRECT_URI = 'https://vk-oauth-test.herokuapp.com/get_token'
 
 
 app = Flask(__name__, static_url_path='')
