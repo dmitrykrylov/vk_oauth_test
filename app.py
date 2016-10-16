@@ -1,7 +1,7 @@
 from flask import Flask, redirect, request, session, url_for
 from flask import render_template
 from functools import wraps
-from utils import get_user_info, get_five_random_friends
+from utils import get_users, get_five_random_friends
 import urllib
 import requests
 import json
@@ -11,7 +11,8 @@ import os
 CLIENT_ID = os.environ.get('VK_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('VK_CLIENT_SECRET')
 API_VERSION = '5.57'
-REDIRECT_URI = 'https://vk-oauth-test.herokuapp.com/get_token'
+REDIRECT_URI = 'http://localhost:5000/get_token'
+# REDIRECT_URI = 'https://vk-oauth-test.herokuapp.com/get_token'
 
 
 app = Flask(__name__, static_url_path='')
@@ -82,7 +83,7 @@ def index():
     token = session['vk_token']
     user_id = session['vk_user_id']
 
-    user = get_user_info(token, user_id)
+    user = get_users(token, [user_id])[0]
     friends = get_five_random_friends(token, user_id)
 
     data = {'user': user, 'friends': friends}
