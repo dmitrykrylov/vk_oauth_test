@@ -103,5 +103,10 @@ def logout():
     return resp
 
 
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
