@@ -1,5 +1,5 @@
 from flask import Flask, redirect, request, session, url_for
-from flask import render_template
+from flask import render_template, make_response
 from functools import wraps
 from utils import get_users, get_five_random_friends
 import urllib
@@ -39,10 +39,11 @@ def build_url(url, params_dict):
 
 
 def require_vk_token(func):
-
     @wraps(func)
     def check_token(*args, **kwargs):
-        if 'vk_token' not in session:
+        has_not_token = 'vk_token' not in session
+        has_not_cookie = request.cookies.get('user_id') is None
+        if has_not_token or has_not_cookie:
             return redirect(url_for('login'))
         return func(*args, **kwargs)
 
@@ -71,7 +72,11 @@ def get_token():
     if (r.status_code == 200):
         session['vk_token'] = response['access_token']
         session['vk_user_id'] = response['user_id']
-        return redirect(url_for('index'))
+
+        resp = make_response(redirect(url_for('index')))
+        resp.set_cookie('user_id', str(response['user_id']))
+
+        return resp
 
     return 'Error'
 
@@ -93,7 +98,10 @@ def index():
 @require_vk_token
 def logout():
     session.clear()
-    return redirect(url_for('login'))
+    resp = make_response(redirect(url_for('login')))
+    resp.set_cookie('user_id', '', expires=0)
+    return resp
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
