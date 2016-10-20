@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta id="data" data-name="{{data}}">
-	<title>Document</title>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-	
-
-		<h2>Вы зашли из-под аккаунта:</h2>
-		<div id="user-container">
-			{{data['user']['first_name']}} {{data['user']['last_name']}}
-		</div>
-		<h3>Это пять Ваших друзей:</h3>	
-		<div id="friends-container">
-			{% for friend in data['friends'] %}
-	        {{friend['first_name']}} {{friend['last_name']}} <br>
-	    {% endfor %}
-		</div>
-		
-		<form class="auth_form" action="/logout">
-			<button type="submit" class="auth_btn">Выход</button>
-		</form>
+  
+    <h2>Вы зашли из-под аккаунта:</h2>
+    <div>
+      {{data['user']['first_name']}} {{data['user']['last_name']}}
+    </div>
+    <h3>Это пять Ваших друзей:</h3> 
+    <div>
+      {% for friend in data['friends'] %}
+          {{friend['first_name']}} {{friend['last_name']}} <br>
+      {% endfor %}
+    </div>
+    
+    <form class="auth_form" action="/logout">
+      <button type="submit" class="auth_btn">Выход</button>
+    </form>
 
 </body>
 </html>
