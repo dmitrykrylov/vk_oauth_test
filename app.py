@@ -17,6 +17,7 @@ REDIRECT_URI = 'https://vk-oauth-test.herokuapp.com/get_token'
 app = Flask(__name__, static_url_path='')
 app.secret_key = CLIENT_SECRET
 
+
 auth_params = {
     'client_id': CLIENT_ID,
     'display': 'page',
@@ -25,6 +26,7 @@ auth_params = {
     'response_type': 'code',
     'v': API_VERSION,
 }
+
 
 access_token_params = {
     'client_id': CLIENT_ID,
@@ -41,9 +43,7 @@ def build_url(url, params_dict):
 def require_vk_token(func):
     @wraps(func)
     def check_token(*args, **kwargs):
-        has_not_token = 'vk_token' not in session
-        has_not_cookie = request.cookies.get('user_id') is None
-        if has_not_token or has_not_cookie:
+        if 'vk_token' not in session:
             return redirect(url_for('login'))
         return func(*args, **kwargs)
 
@@ -72,11 +72,7 @@ def get_token():
     if (r.status_code == 200):
         session['vk_token'] = response['access_token']
         session['vk_user_id'] = response['user_id']
-
-        resp = make_response(redirect(url_for('index')))
-        resp.set_cookie('user_id', str(response['user_id']))
-
-        return resp
+        return redirect(url_for('index'))
 
     return 'Error'
 
@@ -98,9 +94,7 @@ def index():
 @require_vk_token
 def logout():
     session.clear()
-    resp = make_response(redirect(url_for('login')))
-    resp.set_cookie('user_id', '', expires=0)
-    return resp
+    return redirect(url_for('login'))
 
 
 @app.before_request
